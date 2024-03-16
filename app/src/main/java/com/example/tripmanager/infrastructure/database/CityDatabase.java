@@ -1,4 +1,4 @@
-package com.example.tripmanager.flixbusactivity.database;
+package com.example.tripmanager.infrastructure.database;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;

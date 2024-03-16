@@ -5,14 +5,13 @@ import android.os.AsyncTask;
 
 import androidx.room.Room;
 
-import com.example.tripmanager.flixbusactivity.database.CityDatabase;
-import com.example.tripmanager.flixbusactivity.database.CityEntity;
+import com.example.tripmanager.infrastructure.database.CityDatabase;
+import com.example.tripmanager.infrastructure.database.CityEntity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
