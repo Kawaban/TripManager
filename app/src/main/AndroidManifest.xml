@@ -23,5 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".flixbusactivity.FlixBusSearchActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TripManager"/>
+        <activity android:name=".flixbusactivity.FlixBusResultsActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TripManager"/>
     </application>
 </manifest>

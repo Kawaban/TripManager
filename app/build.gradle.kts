@@ -39,7 +39,7 @@ spotless {
         target("**/*.java")
         importOrder()
         removeUnusedImports()
-        palantirJavaFormat("2.9.0")
+        palantirJavaFormat()
     }
 }
 
@@ -52,6 +52,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:3.2.0")
     runtimeOnly("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("com.github.evrencoskun:TableView:v0.8.9.4")
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
