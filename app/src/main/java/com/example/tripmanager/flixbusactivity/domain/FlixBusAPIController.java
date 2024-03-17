@@ -19,8 +19,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class FlixBusAPIController extends AsyncTask<RequestDTO, Void, ArrayList<ResponseDTO>> {
-    private CityDatabase db;
-    private OkHttpClient client;
+    private final CityDatabase db;
+    private final OkHttpClient client;
     public FlixBusAPIController(Context applicationContext) {
        client = new OkHttpClient();
         db = Room.databaseBuilder(applicationContext,
@@ -38,7 +38,7 @@ public class FlixBusAPIController extends AsyncTask<RequestDTO, Void, ArrayList<
         Response response = client.newCall(request).execute();
 
         String stringJson = response.body().string();
-        JSONObject jsonObject = new JSONObject(stringJson);;
+        JSONObject jsonObject = new JSONObject(stringJson);
         String flixBusId= jsonObject.getJSONArray("").getJSONObject(0).getString("id");
         insertCity(cityName, flixBusId);
         return db.cityDao().findByName(cityName);

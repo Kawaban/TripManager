@@ -16,12 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="153dp"
-        android:layout_height="68dp"
-        android:text="Trip Manager"
-        tools:layout_editor_absoluteX="125dp"
-        tools:layout_editor_absoluteY="81dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
