@@ -25,7 +25,7 @@ public class FlixBusResultsActivity extends AppCompatActivity{
         setContentView(R.layout.activity_flixbus_results);
         tableView = findViewById(R.id.tableView);
         tableView.setColumnCount(5);
-        ArrayList<ResponseDTO> result = savedInstanceState.getParcelableArrayList("responses");
+        ArrayList<ResponseDTO> result = getIntent().getExtras().getParcelableArrayList("responses");
         tableView.setHeaderAdapter(new ResponceTableHeaderAdapter(this));
         tableView.setDataAdapter(new ResponceTableDataAdapter(this, result));
     }
