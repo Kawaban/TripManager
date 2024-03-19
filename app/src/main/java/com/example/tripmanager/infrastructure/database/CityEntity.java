@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class CityEntity {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
     @ColumnInfo(name = "city_name")
     public String city_name;

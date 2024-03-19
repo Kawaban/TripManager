@@ -8,11 +8,13 @@ import androidx.room.Room;
 import com.example.tripmanager.infrastructure.database.CityDatabase;
 import com.example.tripmanager.infrastructure.database.CityEntity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -38,8 +40,8 @@ public class FlixBusAPIController extends AsyncTask<RequestDTO, Void, ArrayList<
         Response response = client.newCall(request).execute();
 
         String stringJson = response.body().string();
-        JSONObject jsonObject = new JSONObject(stringJson);
-        String flixBusId= jsonObject.getJSONArray("").getJSONObject(0).getString("id");
+        JSONArray jsonObject = new JSONArray(stringJson);
+        String flixBusId= jsonObject.getJSONObject(0).getJSONObject("city").getString("id");
         insertCity(cityName, flixBusId);
         return db.cityDao().findByName(cityName);
     }
@@ -48,7 +50,7 @@ public class FlixBusAPIController extends AsyncTask<RequestDTO, Void, ArrayList<
         CityEntity cityEntity = new CityEntity();
         cityEntity.city_name = cityName;
         cityEntity.flixbus_id = flixBusId;
-        db.cityDao().insertAll(cityEntity);
+        db.cityDao().insert(cityEntity);
     }
 
 
@@ -75,7 +77,8 @@ public class FlixBusAPIController extends AsyncTask<RequestDTO, Void, ArrayList<
         Response response = client.newCall(request).execute();
 
         JSONObject responseJson = new JSONObject(response.body().string());
-        ArrayList<ResponseDTO> responseDTOS = new ArrayList<>();
+
+        ArrayList<ResponseDTO> responseDTOS = new ArrayList<ResponseDTO>();
         for(int i = 0; i < responseJson.getJSONArray("journeys").length(); i++){
             responseDTOS.add(ResponseMapper.mapToResponseDTO(responseJson.getJSONArray("journeys").getJSONObject(i)));
         }

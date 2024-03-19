@@ -3,6 +3,7 @@ package com.example.tripmanager.infrastructure.database;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public interface CityDao {
 
     @Insert
     void insertAll(CityEntity... users);
+
+    @Insert
+    void insert(CityEntity user);
 
     @Delete
     void delete(CityEntity user);

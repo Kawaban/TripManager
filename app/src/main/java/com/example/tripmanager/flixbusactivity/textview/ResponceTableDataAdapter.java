@@ -61,7 +61,7 @@ public class ResponceTableDataAdapter extends TableDataAdapter<ResponseDTO> {
 
     private View renderPrice(ResponseDTO response) {
         final TextView textView = new TextView(getContext());
-        textView.setText(response.getPrice());
+        textView.setText(String.valueOf(response.getPrice()));
         textView.setPadding(20, 10, 20, 10);
         return textView;
     }

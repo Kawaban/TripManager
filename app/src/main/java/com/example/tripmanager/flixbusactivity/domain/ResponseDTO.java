@@ -10,12 +10,12 @@ public class ResponseDTO implements Parcelable {
     private String destination;
     private String departureTime;
     private String arrivalTime;
-    private String price;
+    private int price;
     private String duration;
     private String link;
     private int changeovers;
 
-    public ResponseDTO(String origin, String destination, String departureTime, String arrivalTime, String price, String duration, String link, int changeovers) {
+    public ResponseDTO(String origin, String destination, String departureTime, String arrivalTime, int price, String duration, String link, int changeovers) {
         this.origin = origin;
         this.destination = destination;
         this.departureTime = departureTime;
@@ -41,7 +41,7 @@ public class ResponseDTO implements Parcelable {
         dest.writeString(destination);
         dest.writeString(departureTime);
         dest.writeString(arrivalTime);
-        dest.writeString(price);
+        dest.writeInt(price);
         dest.writeString(duration);
         dest.writeString(link);
         dest.writeInt(changeovers);
@@ -53,7 +53,7 @@ public class ResponseDTO implements Parcelable {
         destination = in.readString();
         departureTime = in.readString();
         arrivalTime = in.readString();
-        price = in.readString();
+        price = in.readInt();
         duration = in.readString();
         link = in.readString();
         changeovers = in.readInt();
@@ -91,11 +91,11 @@ public class ResponseDTO implements Parcelable {
         this.arrivalTime = arrivalTime;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
