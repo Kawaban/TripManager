@@ -63,29 +63,29 @@ public class LocationAPIController extends AsyncTask<RequestDTO, Void, ArrayList
 
     public String getRestaurantID(String city) throws IOException, JSONException {
         Request request = new Request.Builder()
-                .url("https://tripadvisor16.p.rapidapi.com/api/v1/restaurant/searchLocation?query="+city)
+                .url("https://travel-advisor.p.rapidapi.com/locations/search?query="+city+"&limit=30&offset=0&units=km&location_id=1&currency=USD&sort=relevance&lang=en_US")
                 .get()
                 .addHeader("X-RapidAPI-Key", "1120050b5emshec695034c8d3f0cp15fd46jsn60f4b164ea9c")
-                .addHeader("X-RapidAPI-Host", "tripadvisor16.p.rapidapi.com")
+                .addHeader("X-RapidAPI-Host", "travel-advisor.p.rapidapi.com")
                 .build();
 
         Response response = client.newCall(request).execute();
         JSONObject jsonObject = new JSONObject(response.body().string());
-        return jsonObject.getJSONArray("data").getJSONObject(0).optString("documentId");
+        return jsonObject.getJSONArray("data").getJSONObject(0).getJSONObject("result_object").optString("location_id");
     }
 
     public ArrayList<ResponseDTO> getRestaurants(RequestDTO requestDTO) throws JSONException, IOException {
         String locationId = getRestaurantID(requestDTO.getCity());
 
         Request request = new Request.Builder()
-                .url("https://tripadvisor16.p.rapidapi.com/api/v1/restaurant/searchRestaurants?locationId="+locationId)
+                .url("https://travel-advisor.p.rapidapi.com/restaurants/list?location_id="+locationId+"&restaurant_tagcategory=10591&restaurant_tagcategory_standalone=10591&currency=USD&lunit=km&limit=30&open_now=false&lang=en_US")
                 .get()
                 .addHeader("X-RapidAPI-Key", "1120050b5emshec695034c8d3f0cp15fd46jsn60f4b164ea9c")
-                .addHeader("X-RapidAPI-Host", "tripadvisor16.p.rapidapi.com")
+                .addHeader("X-RapidAPI-Host", "travel-advisor.p.rapidapi.com")
                 .build();
 
         Response response = client.newCall(request).execute();
-        JSONObject jsonObject = new JSONObject(response.body().string()).getJSONObject("data");
+        JSONObject jsonObject = new JSONObject(response.body().string());
         ArrayList<ResponseDTO> responses = new ArrayList<>();
         for (int i = 0; i < jsonObject.getJSONArray("data").length(); i++) {
             responses.add(ResponseMapper.mapJSONRestaurantsToResponseDTO(jsonObject.getJSONArray("data").getJSONObject(i)));
