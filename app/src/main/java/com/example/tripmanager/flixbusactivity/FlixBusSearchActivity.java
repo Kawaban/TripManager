@@ -43,9 +43,6 @@ public class FlixBusSearchActivity extends AppCompatActivity {
             RequestDTO requestDTO = new RequestDTO(fromText.getText().toString(), toText.getText().toString(), departureDateText.getText().toString(), Integer.parseInt(numberText.getText().toString()), RoundTripRadioButton.isChecked(), returnDateText.getText().toString());
             try{
                ArrayList<ResponseDTO> responseDTOS = flixBusAPIController.execute(requestDTO).get();
-                /*ArrayList<ResponseDTO> responseDTOS = new ArrayList<>();
-                responseDTOS.add(new ResponseDTO("Berlin", "Munich", "12:00", "15:00", "20", "3:00", "https://www.flixbus.de", 0));
-                responseDTOS.add(new ResponseDTO("Munich", "Berlin", "15:00", "15:00", "20", "3:00", "https://www.flixbus.de", 0));*/
                Intent intent = new Intent(this, FlixBusResultsActivity.class);
                intent.putParcelableArrayListExtra("responses", responseDTOS);
                startActivity(intent);

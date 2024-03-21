@@ -48,6 +48,7 @@ dependencies {
 
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     implementation("com.squareup.okhttp3:okhttp:3.2.0")
     runtimeOnly("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
