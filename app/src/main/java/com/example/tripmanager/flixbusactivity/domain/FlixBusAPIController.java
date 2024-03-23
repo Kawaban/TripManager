@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 
 import androidx.room.Room;
 
-import com.example.tripmanager.infrastructure.database.CityDatabase;
+import com.example.tripmanager.infrastructure.database.AppDatabase;
 import com.example.tripmanager.infrastructure.database.CityEntity;
 
 import org.json.JSONArray;
@@ -21,12 +21,12 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class FlixBusAPIController extends AsyncTask<RequestDTO, Void, ArrayList<ResponseDTO>> {
-    private final CityDatabase db;
+    private final AppDatabase db;
     private final OkHttpClient client;
     public FlixBusAPIController(Context applicationContext) {
        client = new OkHttpClient();
         db = Room.databaseBuilder(applicationContext,
-                CityDatabase.class, "database-name").build();
+                AppDatabase.class, "database-name").build();
     }
 
     public CityEntity requestFlixBusIdOfCity(String cityName) throws IOException, JSONException {

@@ -1,4 +1,4 @@
-package com.example.tripmanager.flixbusactivity.textview;
+package com.example.tripmanager.flixbusactivity.tableview;
 
 import android.content.Context;
 import android.view.View;

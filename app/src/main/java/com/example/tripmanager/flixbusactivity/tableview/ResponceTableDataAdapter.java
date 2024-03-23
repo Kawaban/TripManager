@@ -1,4 +1,4 @@
-package com.example.tripmanager.flixbusactivity.textview;
+package com.example.tripmanager.flixbusactivity.tableview;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;

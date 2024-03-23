@@ -7,15 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tripmanager.R;
 import com.example.tripmanager.flixbusactivity.domain.ResponseDTO;
-import com.example.tripmanager.flixbusactivity.textview.ResponceTableDataAdapter;
-import com.example.tripmanager.flixbusactivity.textview.ResponceTableHeaderAdapter;
+import com.example.tripmanager.flixbusactivity.tableview.ResponceTableDataAdapter;
+import com.example.tripmanager.flixbusactivity.tableview.ResponceTableHeaderAdapter;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.codecrafters.tableview.TableView;
-import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
 public class FlixBusResultsActivity extends AppCompatActivity{
     private TableView<ResponseDTO> tableView;
