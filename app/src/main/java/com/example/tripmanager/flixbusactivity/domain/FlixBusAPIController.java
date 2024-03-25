@@ -25,8 +25,7 @@ public class FlixBusAPIController extends AsyncTask<RequestDTO, Void, ArrayList<
     private final OkHttpClient client;
     public FlixBusAPIController(Context applicationContext) {
        client = new OkHttpClient();
-        db = Room.databaseBuilder(applicationContext,
-                AppDatabase.class, "database-name").build();
+        db = AppDatabase.getInstance(applicationContext);
     }
 
     public CityEntity requestFlixBusIdOfCity(String cityName) throws IOException, JSONException {

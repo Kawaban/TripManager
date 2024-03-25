@@ -34,8 +34,7 @@ public class StatisticsAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics_add);
 
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name").build();
+
 
         addImagesButton = findViewById(R.id.buttonAddImages);
         saveButton = findViewById(R.id.buttonSave);
@@ -77,6 +76,7 @@ public class StatisticsAddActivity extends AppCompatActivity {
             tripEntity.startDate = startDate;
             tripEntity.endDate = endDate;
             tripEntity.images = images;
+            AppDatabase.getInstance(this).tripDao().insert(tripEntity);
             Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
         });
 
