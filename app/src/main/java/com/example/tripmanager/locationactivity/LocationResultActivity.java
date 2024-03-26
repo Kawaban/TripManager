@@ -34,6 +34,7 @@ public class LocationResultActivity extends AppCompatActivity implements OnMapRe
             googleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(Double.parseDouble(responseDTO.getLatitude()), Double.parseDouble(responseDTO.getLongitude())))
                     .title(responseDTO.getName()));
+
         }
 
     }

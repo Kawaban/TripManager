@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.tripmanager.infrastructure.database.TripEntity;
@@ -32,10 +33,10 @@ public class TripTableDataAdapter extends TableDataAdapter<TripEntity> {
                 renderedView = renderExpenses(response);
                 break;
             case 2:
-                renderedView = renderStartDate(response);
+                renderedView = renderDuration(response);
                 break;
             case 3:
-                renderedView = renderEndDate(response);
+                renderedView = renderRating(response);
                 break;
             case 4:
                 renderedView = renderImages(response);
@@ -59,18 +60,18 @@ public class TripTableDataAdapter extends TableDataAdapter<TripEntity> {
         return textView;
     }
 
-    private View renderStartDate(TripEntity trip) {
+    private View renderDuration(TripEntity trip) {
         final TextView textView = new TextView(getContext());
-        textView.setText(trip.startDate);
+        textView.setText(trip.startDate + " - " + trip.endDate);
         textView.setPadding(20, 10, 20, 10);
         return textView;
     }
 
-    private View renderEndDate(TripEntity trip) {
-        final TextView textView = new TextView(getContext());
-        textView.setText(trip.endDate);
-        textView.setPadding(20, 10, 20, 10);
-        return textView;
+    private View renderRating(TripEntity trip) {
+        final RatingBar ratingBar = new RatingBar(getContext());
+        ratingBar.setRating(trip.rating);
+        ratingBar.setPadding(20, 10, 20, 10);
+        return ratingBar;
     }
 
     private View renderImages(TripEntity trip) {

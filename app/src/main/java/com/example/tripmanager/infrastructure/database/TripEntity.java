@@ -17,6 +17,7 @@ public class TripEntity {
     public String expenses;
     public String startDate;
     public String endDate;
+    public float rating;
     @TypeConverters(Converters.class)
     public ArrayList<Uri> images;
 }

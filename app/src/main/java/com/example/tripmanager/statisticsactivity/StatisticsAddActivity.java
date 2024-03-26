@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,8 +26,8 @@ public class StatisticsAddActivity extends AppCompatActivity {
     private EditText expensesEditText;
     private EditText startDateEditText;
     private EditText endDateEditText;
+    private RatingBar ratingBar;
 
-    private AppDatabase db;
 
     ArrayList<Uri> images = new ArrayList<>();
     @SuppressLint("MissingInflatedId")
@@ -42,6 +43,7 @@ public class StatisticsAddActivity extends AppCompatActivity {
         expensesEditText = findViewById(R.id.editTextNumberExpenses);
         startDateEditText = findViewById(R.id.editTextStartDate);
         endDateEditText = findViewById(R.id.editTextEndDate);
+        ratingBar = findViewById(R.id.ratingBar);
 
         addImagesButton.setOnClickListener(v -> {
             Intent intent = new Intent();
@@ -64,7 +66,8 @@ public class StatisticsAddActivity extends AppCompatActivity {
             String endDate = endDateEditText.getText().toString();
 
             // check if the data is empty
-            if (location.isEmpty() || expenses.isEmpty() || startDate.isEmpty() || endDate.isEmpty()) {
+            if (location.isEmpty() || expenses.isEmpty() || startDate.isEmpty() ||
+                    endDate.isEmpty() || ratingBar.getRating() == 0 || images.isEmpty()){
                 Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -76,6 +79,7 @@ public class StatisticsAddActivity extends AppCompatActivity {
             tripEntity.startDate = startDate;
             tripEntity.endDate = endDate;
             tripEntity.images = images;
+            tripEntity.rating = ratingBar.getRating();
             AppDatabase.getInstance(this).tripDao().insert(tripEntity);
             Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
         });

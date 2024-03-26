@@ -24,10 +24,10 @@ public class TripTableHeaderAdapter extends TableHeaderAdapter {
                 renderedView = renderDefaultHeader("Expenses");
                 break;
             case 2:
-                renderedView = renderDefaultHeader("Start Date");
+                renderedView = renderDefaultHeader("Duration");
                 break;
             case 3:
-                renderedView = renderDefaultHeader("End Date");
+                renderedView = renderDefaultHeader("Rating");
                 break;
             case 4:
                 renderedView = renderDefaultHeader("Images");
