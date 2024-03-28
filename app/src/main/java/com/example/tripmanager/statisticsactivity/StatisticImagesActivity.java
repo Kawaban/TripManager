@@ -20,7 +20,6 @@ public class StatisticImagesActivity extends AppCompatActivity{
 
     private Button returnButton;
     private RecyclerView recyclerView;
-    private ImageView imageView;
 
 
         @SuppressLint("MissingInflatedId")

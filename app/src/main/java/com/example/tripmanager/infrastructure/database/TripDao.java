@@ -1,6 +1,7 @@
 package com.example.tripmanager.infrastructure.database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -13,5 +14,8 @@ public interface TripDao {
 
     @Insert
     void insert(TripEntity user);
+
+    @Delete
+    void delete(TripEntity user);
 
 }
