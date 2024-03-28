@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">TripManager</string>
-    <string name="advisorRoleContent">Hello! I\'m an AI assistant bot based on ChatGPT 3. How may I help you?</string>
-    <string name="advisorRequestPreambula">You are a trip advisor. Choose the most appropriate trip destination for a person considering his last experiences:</string>
+    <string name="question">recommend the best trip destination</string>
+    <string name="context">You are a personal trip advisor. Consider the best option for person according to his previous trips: </string>
 </resources>

@@ -27,6 +27,7 @@ public class AIAdvisorSelectActivity extends AppCompatActivity {
         buttonAdvisor.setOnClickListener(v -> {
             try {
                 output = aiAdvisorAPIController.execute("").get();
+                System.out.println(output);
                 textViewOutput.setText(output);
             } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
