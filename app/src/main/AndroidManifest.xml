@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -24,6 +26,10 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -40,5 +46,24 @@
         <activity android:name=".flixbusactivity.FlixBusResultsActivity"
             android:exported="true"
             android:theme="@style/Theme.TripManager"/>
+        <activity android:name=".statisticsactivity.StatisticsMenuActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TripManager"/>
+        <activity android:name=".statisticsactivity.StatisticsAddActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TripManager"/>
+        <activity android:name=".statisticsactivity.StatisticImagesActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TripManager"/>
+        <activity android:name=".aiadvisoractivity.AIAdvisorSelectActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TripManager"/>
+        <activity android:name=".locationactivity.LocationActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TripManager"/>
+        <activity android:name=".locationactivity.LocationResultActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TripManager"/>
+
     </application>
 </manifest>

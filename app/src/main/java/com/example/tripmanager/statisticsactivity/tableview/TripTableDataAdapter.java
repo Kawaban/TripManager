@@ -3,15 +3,21 @@ package com.example.tripmanager.statisticsactivity.tableview;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.tripmanager.infrastructure.database.Converters;
 import com.example.tripmanager.infrastructure.database.TripEntity;
 import com.example.tripmanager.statisticsactivity.StatisticImagesActivity;
 
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.codecrafters.tableview.TableDataAdapter;
@@ -68,8 +74,8 @@ public class TripTableDataAdapter extends TableDataAdapter<TripEntity> {
     }
 
     private View renderRating(TripEntity trip) {
-        final RatingBar ratingBar = new RatingBar(getContext());
-        ratingBar.setRating(trip.rating);
+        final TextView ratingBar = new TextView(getContext());
+        ratingBar.setText(String.valueOf(trip.rating));
         ratingBar.setPadding(20, 10, 20, 10);
         return ratingBar;
     }
@@ -80,9 +86,10 @@ public class TripTableDataAdapter extends TableDataAdapter<TripEntity> {
         button.setPadding(20, 10, 20, 10);
         button.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), StatisticImagesActivity.class);
-            intent.putParcelableArrayListExtra("images", trip.images);
+            intent.putExtra("images",Converters.fromListToString(trip.images));
             getContext().startActivity(intent);
         });
         return button;
     }
+
 }

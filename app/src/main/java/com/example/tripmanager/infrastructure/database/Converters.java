@@ -5,6 +5,7 @@ import android.net.Uri;
 import androidx.room.TypeConverter;
 
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,8 +41,8 @@ public class Converters {
 
         // Iterate through the substrings and convert each one to URI
         for (String str : uriStrings) {
-                Uri uri = Uri.parse(str.trim()); // Trim the substring to remove leading/trailing spaces
-                uriList.add(uri);
+            Uri uri = Uri.parse(str.trim()); // Trim the substring to remove leading/trailing spaces
+            uriList.add(uri);
         }
 
         return uriList;

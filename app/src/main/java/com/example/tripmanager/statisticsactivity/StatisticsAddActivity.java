@@ -10,7 +10,6 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import com.example.tripmanager.R;
 import com.example.tripmanager.infrastructure.database.AppDatabase;
@@ -53,7 +52,8 @@ public class StatisticsAddActivity extends AppCompatActivity {
 
             // allowing multiple image to be selected
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+            intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), R.integer.PICK_IMAGE_MULTIPLE);
 
         });
@@ -94,16 +94,25 @@ public class StatisticsAddActivity extends AppCompatActivity {
             if (data.getClipData() != null) {
                 int cout = data.getClipData().getItemCount();
                 for (int i = 0; i < cout; i++) {
-                    Uri imageurl = data.getClipData().getItemAt(i).getUri();
-                    images.add(imageurl);
+                        Uri imageurl = data.getClipData().getItemAt(i).getUri();
+                        getContentResolver().takePersistableUriPermission(imageurl,
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        images.add(imageurl);
                 }
             } else {
-                Uri imageurl = data.getData();
-                images.add(imageurl);
+                    Uri imageurl = data.getData();
+                if (imageurl != null) {
+                    getContentResolver().takePersistableUriPermission(imageurl,
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    images.add(imageurl);
+                }
             }
         } else {
             Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
         }
     }
+
+
+
 
 }

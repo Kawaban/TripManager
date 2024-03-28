@@ -18,7 +18,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private ArrayList<Uri> images;
 
     public RecyclerAdapter(ArrayList<Uri> images) {
-        this.images = images;
+        if (images == null) {
+            this.images = new ArrayList<>();
+        }
+        else {
+            this.images = images;
+        }
     }
 
     @NonNull

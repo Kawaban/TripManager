@@ -18,13 +18,13 @@ public abstract class AppDatabase extends RoomDatabase {
         return instance;
     }
 
-    private AppDatabase() {};
+    public AppDatabase() {};
 
     private static AppDatabase create(final Context context) {
         return Room.databaseBuilder(
                 context,
                 AppDatabase.class,
-                DB_NAME).build();
+                DB_NAME).allowMainThreadQueries().build();
     }
 
     public abstract TripDao tripDao();

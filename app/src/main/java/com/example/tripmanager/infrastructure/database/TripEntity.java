@@ -20,4 +20,5 @@ public class TripEntity {
     public float rating;
     @TypeConverters(Converters.class)
     public ArrayList<Uri> images;
+
 }
