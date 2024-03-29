@@ -11,8 +11,8 @@ public class ResponseDTO implements Parcelable {
     private String name;
     private String info;
     private String rating;
-    private String type;
-    public ResponseDTO(String latitude, String longitude, String name, String info, String rating, String type) {
+    private int type;
+    public ResponseDTO(String latitude, String longitude, String name, String info, String rating, int type) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.name = name;
@@ -28,7 +28,7 @@ public class ResponseDTO implements Parcelable {
         dest.writeString(name);
         dest.writeString(info);
         dest.writeString(rating);
-        dest.writeString(type);
+        dest.writeInt(type);
     }
 
     public ResponseDTO(Parcel in) {
@@ -41,7 +41,7 @@ public class ResponseDTO implements Parcelable {
         name = in.readString();
         info = in.readString();
         rating = in.readString();
-        type = in.readString();
+        type = in.readInt();
     }
 
     public static final Parcelable.Creator<ResponseDTO> CREATOR = new Parcelable.Creator<ResponseDTO>() {
@@ -94,11 +94,11 @@ public class ResponseDTO implements Parcelable {
         this.info = info;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

@@ -40,7 +40,7 @@ public class LocationAPIController extends AsyncTask<RequestDTO, Void, ArrayList
 
     public ArrayList<ResponseDTO> getAttractions(RequestDTO requestDTO) throws IOException, JSONException {
         String locationId = getAttractionId(requestDTO.getCity());
-
+        System.out.println(locationId);
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
         RequestBody body = RequestBody.create(mediaType, "location_id="+locationId+"&language=en_US&currency=USD&offset=0");
         Request request = new Request.Builder()
@@ -52,10 +52,11 @@ public class LocationAPIController extends AsyncTask<RequestDTO, Void, ArrayList
                 .build();
 
         Response response = client.newCall(request).execute();
-        JSONObject jsonObject = new JSONObject(response.body().string()).getJSONObject("results");
+        String responseString = response.body().string();
+        JSONObject jsonObject = new JSONObject(responseString);
         ArrayList<ResponseDTO> responses = new ArrayList<>();
-        for (int i = 0; i < jsonObject.getJSONArray("data").length(); i++) {
-            responses.add(ResponseMapper.mapJSONAttractionsToResponseDTO(jsonObject.getJSONArray("data").getJSONObject(i)));
+        for (int i = 0; i < jsonObject.getJSONObject("results").getJSONArray("data").length(); i++) {
+            responses.add(ResponseMapper.mapJSONAttractionsToResponseDTO(jsonObject.getJSONObject("results").getJSONArray("data").getJSONObject(i)));
         }
         return responses;
 
@@ -76,7 +77,6 @@ public class LocationAPIController extends AsyncTask<RequestDTO, Void, ArrayList
 
     public ArrayList<ResponseDTO> getRestaurants(RequestDTO requestDTO) throws JSONException, IOException {
         String locationId = getRestaurantID(requestDTO.getCity());
-
         Request request = new Request.Builder()
                 .url("https://travel-advisor.p.rapidapi.com/restaurants/list?location_id="+locationId+"&restaurant_tagcategory=10591&restaurant_tagcategory_standalone=10591&currency=USD&lunit=km&limit=30&open_now=false&lang=en_US")
                 .get()
@@ -85,10 +85,13 @@ public class LocationAPIController extends AsyncTask<RequestDTO, Void, ArrayList
                 .build();
 
         Response response = client.newCall(request).execute();
-        JSONObject jsonObject = new JSONObject(response.body().string());
+        String responseString = response.body().string();
+        JSONObject jsonObject = new JSONObject(responseString);
         ArrayList<ResponseDTO> responses = new ArrayList<>();
         for (int i = 0; i < jsonObject.getJSONArray("data").length(); i++) {
-            responses.add(ResponseMapper.mapJSONRestaurantsToResponseDTO(jsonObject.getJSONArray("data").getJSONObject(i)));
+            ResponseDTO responseDTO = ResponseMapper.mapJSONRestaurantsToResponseDTO(jsonObject.getJSONArray("data").getJSONObject(i));
+            if (responseDTO != null)
+                 responses.add(responseDTO);
         }
         return responses;
 

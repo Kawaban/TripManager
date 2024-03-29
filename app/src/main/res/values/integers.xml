@@ -3,4 +3,6 @@
     <integer name="PICK_IMAGE_MULTIPLE">1</integer>
     <integer name="TYPE_SHOW">2</integer>
     <integer name="TYPE_DELETE">3</integer>
+    <integer name="TYPE_RESTAURANT">1</integer>
+    <integer name="TYPE_ATTRACTION">2</integer>
 </resources>
