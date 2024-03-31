@@ -20,6 +20,7 @@ import com.example.tripmanager.infrastructure.database.TripEntity;
 import com.example.tripmanager.statisticsactivity.StatisticImagesActivity;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,11 +28,11 @@ import de.codecrafters.tableview.TableDataAdapter;
 
 public class TripTableDataAdapter extends TableDataAdapter<TripEntity> {
     private int type;
-    private Activity activity;
+    private WeakReference<Activity> activity;
     public TripTableDataAdapter(Context context, List<TripEntity> data, int type, Activity activity) {
         super(context, data);
         this.type = type;
-        this.activity = activity;
+        this.activity = new WeakReference<Activity>(activity);
     }
     @Override
     public View getCellView(int rowIndex, int columnIndex, ViewGroup parentView) {
@@ -108,7 +109,7 @@ public class TripTableDataAdapter extends TableDataAdapter<TripEntity> {
             button.setOnClickListener(v -> {
                 AppDatabase.getInstance(getContext()).tripDao().delete(trip);
                 Toast.makeText(getContext(), "Trip Deleted", Toast.LENGTH_SHORT).show();
-                activity.recreate();
+                activity.get().recreate();
             });
             return button;
         }
