@@ -25,14 +25,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.codecrafters.tableview.TableDataAdapter;
+import de.codecrafters.tableview.TableView;
 
 public class TripTableDataAdapter extends TableDataAdapter<TripEntity> {
     private int type;
-    private WeakReference<Activity> activity;
-    public TripTableDataAdapter(Context context, List<TripEntity> data, int type, Activity activity) {
+    private TableView tableView;
+    public TripTableDataAdapter(Context context, List<TripEntity> data, int type, TableView tableView) {
         super(context, data);
         this.type = type;
-        this.activity = new WeakReference<Activity>(activity);
+        this.tableView = tableView;
     }
     @Override
     public View getCellView(int rowIndex, int columnIndex, ViewGroup parentView) {
@@ -109,7 +110,7 @@ public class TripTableDataAdapter extends TableDataAdapter<TripEntity> {
             button.setOnClickListener(v -> {
                 AppDatabase.getInstance(getContext()).tripDao().delete(trip);
                 Toast.makeText(getContext(), "Trip Deleted", Toast.LENGTH_SHORT).show();
-                activity.get().recreate();
+                tableView.setDataAdapter(new TripTableDataAdapter(getContext(), AppDatabase.getInstance(getContext()).tripDao().getAll(), type, tableView));
             });
             return button;
         }

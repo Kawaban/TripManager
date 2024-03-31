@@ -3,16 +3,12 @@ package com.example.tripmanager.flixbusactivity.domain;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.view.View;
-
-import androidx.room.Room;
 
 import com.example.tripmanager.flixbusactivity.FlixBusResultsActivity;
 import com.example.tripmanager.infrastructure.database.AppDatabase;
 import com.example.tripmanager.infrastructure.database.CityEntity;
-import com.example.tripmanager.infrastructure.util.BackgroundTask;
-import com.example.tripmanager.locationactivity.LocationResultActivity;
+import com.example.tripmanager.infrastructure.model.BackgroundTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,7 +16,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -87,7 +82,6 @@ public class FlixBusAPIController extends BackgroundTask<RequestDTO, ArrayList<R
         Response response = client.newCall(request).execute();
 
         JSONObject responseJson = new JSONObject(response.body().string());
-
         ArrayList<ResponseDTO> responseDTOS = new ArrayList<ResponseDTO>();
         for(int i = 0; i < responseJson.getJSONArray("journeys").length(); i++){
             responseDTOS.add(ResponseMapper.mapToResponseDTO(responseJson.getJSONArray("journeys").getJSONObject(i)));
@@ -99,12 +93,8 @@ public class FlixBusAPIController extends BackgroundTask<RequestDTO, ArrayList<R
 
 
     @Override
-    public ArrayList<ResponseDTO> doInBackground(RequestDTO request) {
-        try {
+    public ArrayList<ResponseDTO> doInBackground(RequestDTO request) throws IOException, JSONException{
             return getResponses(request);
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
@@ -118,5 +108,11 @@ public class FlixBusAPIController extends BackgroundTask<RequestDTO, ArrayList<R
         Intent intent = new Intent(activity, FlixBusResultsActivity.class);
         intent.putParcelableArrayListExtra("responses", response);
         activity.startActivity(intent);
+    }
+
+    @Override
+    public void onException() {
+        mainLayout.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.GONE);
     }
 }

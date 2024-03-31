@@ -10,7 +10,7 @@ public class ResponseMapper {
                 jsonObject.optString("arr_name"),
                 jsonObject.optString("dep_offset"),
                 jsonObject.optString("arr_offset"),
-                jsonObject.getJSONArray("fares").getJSONObject(0).optInt("price_in_cents"),
+                jsonObject.getJSONArray("fares").getJSONObject(0).optString("price"),
                 jsonObject.optString("duration"),
                 jsonObject.optString("deeplink"),
                 jsonObject.optInt("changeovers")

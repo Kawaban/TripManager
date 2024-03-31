@@ -82,6 +82,8 @@ public class StatisticsAddActivity extends AppCompatActivity {
             tripEntity.rating = ratingBar.getRating();
             AppDatabase.getInstance(this).tripDao().insert(tripEntity);
             Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
+
+            finish();
         });
 
 

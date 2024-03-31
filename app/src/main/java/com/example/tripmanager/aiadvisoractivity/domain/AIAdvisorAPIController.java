@@ -3,7 +3,6 @@ package com.example.tripmanager.aiadvisoractivity.domain;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,14 +10,12 @@ import android.widget.TextView;
 import com.example.tripmanager.R;
 import com.example.tripmanager.infrastructure.database.AppDatabase;
 import com.example.tripmanager.infrastructure.database.TripEntity;
-import com.example.tripmanager.infrastructure.util.BackgroundTask;
+import com.example.tripmanager.infrastructure.model.BackgroundTask;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -86,12 +83,8 @@ public class AIAdvisorAPIController extends BackgroundTask<String, String> {
 
 
     @Override
-    public String doInBackground(String strings) {
-        try {
+    public String doInBackground(String strings) throws IOException, JSONException {
             return getRecommendations(prepareInput());
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
@@ -105,5 +98,12 @@ public class AIAdvisorAPIController extends BackgroundTask<String, String> {
         mainLayout.setVisibility(View.VISIBLE);
         loadingLayout.setVisibility(View.GONE);
         textViewOutput.setText(response);
+    }
+
+    @Override
+    public void onException() {
+        mainLayout.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.GONE);
+
     }
 }

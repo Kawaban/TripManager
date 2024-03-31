@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class StatisticImagesActivity extends AppCompatActivity{
 
-    private Button returnButton;
+
     private RecyclerView recyclerView;
 
 
@@ -26,7 +26,6 @@ public class StatisticImagesActivity extends AppCompatActivity{
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_statistics_images);
-            returnButton = findViewById(R.id.buttonReturn);
             recyclerView = findViewById(R.id.recyclerView);
             Bundle extras = getIntent().getExtras();
             String value = extras.getString("images");
@@ -35,9 +34,7 @@ public class StatisticImagesActivity extends AppCompatActivity{
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new GridLayoutManager(this,4));
 
-            returnButton.setOnClickListener(v -> {
-                 finish();
-            });
+
 
 
         }

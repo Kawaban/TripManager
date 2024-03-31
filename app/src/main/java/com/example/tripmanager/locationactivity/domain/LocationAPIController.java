@@ -2,12 +2,10 @@ package com.example.tripmanager.locationactivity.domain;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.view.View;
 
 
-import com.example.tripmanager.flixbusactivity.FlixBusResultsActivity;
-import com.example.tripmanager.infrastructure.util.BackgroundTask;
+import com.example.tripmanager.infrastructure.model.BackgroundTask;
 import com.example.tripmanager.locationactivity.LocationResultActivity;
 
 import org.json.JSONException;
@@ -120,12 +118,8 @@ public class LocationAPIController extends BackgroundTask<RequestDTO,ArrayList<R
         return responses;
     }
     @Override
-    public ArrayList<ResponseDTO> doInBackground(RequestDTO request) {
-        try {
+    public ArrayList<ResponseDTO> doInBackground(RequestDTO request) throws IOException, JSONException{
             return getResponses(request);
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
@@ -139,5 +133,11 @@ public class LocationAPIController extends BackgroundTask<RequestDTO,ArrayList<R
         Intent intent = new Intent(activity, LocationResultActivity.class);
         intent.putParcelableArrayListExtra("responses", response);
         activity.startActivity(intent);
+    }
+
+    @Override
+    public void onException() {
+        mainLayout.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.GONE);
     }
 }

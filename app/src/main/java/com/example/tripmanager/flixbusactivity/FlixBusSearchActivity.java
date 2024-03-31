@@ -26,8 +26,8 @@ public class FlixBusSearchActivity extends AppCompatActivity {
     private EditText toText;
     private EditText numberText;
     private EditText departureDateText;
-    private EditText returnDateText;
-    private RadioButton RoundTripRadioButton;
+    private View mainLayout;
+    private View loadingLayout;
     @Override
     @SuppressLint("MissingInflatedId")
     public void onCreate(Bundle savedInstanceState) {
@@ -39,20 +39,30 @@ public class FlixBusSearchActivity extends AppCompatActivity {
         toText = findViewById(R.id.editTextTo);
         numberText = findViewById(R.id.editTextNumber);
         departureDateText = findViewById(R.id.editTextDateDeparture);
-        returnDateText = findViewById(R.id.editTextDateReturn);
-        RoundTripRadioButton = findViewById(R.id.radioButtonRoundTrip);
 
-        View mainLayout = findViewById(R.id.main_flixbus_layout);
-        View loadingLayout = findViewById(R.id.loading_layout);
+        mainLayout = findViewById(R.id.main_flixbus_layout);
+        loadingLayout = findViewById(R.id.loading_layout);
+
         flixBusAPIController=new FlixBusAPIController(getApplicationContext(), this, mainLayout, loadingLayout);
 
         searchButton.setOnClickListener(v -> {
 
-            RequestDTO requestDTO = new RequestDTO(fromText.getText().toString(), toText.getText().toString(), departureDateText.getText().toString(), Integer.parseInt(numberText.getText().toString()), RoundTripRadioButton.isChecked(), returnDateText.getText().toString());
+            if (fromText.getText().toString().isEmpty() || toText.getText().toString().isEmpty() || numberText.getText().toString().isEmpty() || departureDateText.getText().toString().isEmpty()) {
+                Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            RequestDTO requestDTO = new RequestDTO(fromText.getText().toString(), toText.getText().toString(), departureDateText.getText().toString(), Integer.parseInt(numberText.getText().toString()));
             flixBusAPIController.execute(requestDTO);
 
         });
 
+    }
+
+    public void onRestart() {
+        super.onRestart();
+        mainLayout.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.GONE);
     }
 
 

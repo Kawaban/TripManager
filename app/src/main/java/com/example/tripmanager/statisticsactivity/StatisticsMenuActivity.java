@@ -33,15 +33,29 @@ public class StatisticsMenuActivity extends AppCompatActivity {
             Intent intent = new Intent(this, StatisticsAddActivity.class);
             startActivity(intent);
         });
+
         deleteTripButton.setOnClickListener(v -> {
-            type = R.integer.TYPE_DELETE;
-            tableView.setDataAdapter(new TripTableDataAdapter(this, AppDatabase.getInstance(this).tripDao().getAll(),type,this));
+            if (type == R.integer.TYPE_SHOW) {
+                type = R.integer.TYPE_DELETE;
+                tableView.setDataAdapter(new TripTableDataAdapter(this, AppDatabase.getInstance(this).tripDao().getAll(), type, tableView));
+            }
+            else {
+                type = R.integer.TYPE_SHOW;
+                tableView.setDataAdapter(new TripTableDataAdapter(this, AppDatabase.getInstance(this).tripDao().getAll(), type, tableView));
+            }
         });
         tableView.setColumnCount(5);
         tableView.setHeaderAdapter(new TripTableHeaderAdapter(this));
-        tableView.setDataAdapter(new TripTableDataAdapter(this, AppDatabase.getInstance(this).tripDao().getAll(),type,this));
+        tableView.setDataAdapter(new TripTableDataAdapter(this, AppDatabase.getInstance(this).tripDao().getAll(),type,tableView));
 
       }
+
+      public void onRestart() {
+        super.onRestart();
+        tableView.setDataAdapter(new TripTableDataAdapter(this, AppDatabase.getInstance(this).tripDao().getAll(),type,tableView));
+      }
+
+
 
 
 }

@@ -6,15 +6,11 @@ public class RequestDTO {
     private String date;
 
     private int numberOfPassengers;
-    private boolean isRoundTrip;
-    private String returnDate;
-    public RequestDTO(String origin, String destination, String date, int numberOfPassengers, boolean isRoundTrip, String returnDate) {
+    public RequestDTO(String origin, String destination, String date, int numberOfPassengers) {
         this.origin = origin;
         this.destination = destination;
         this.date = date;
         this.numberOfPassengers = numberOfPassengers;
-        this.isRoundTrip = isRoundTrip;
-        this.returnDate = returnDate;
     }
 
     public String getOrigin() {
@@ -49,19 +45,4 @@ public class RequestDTO {
         this.numberOfPassengers = numberOfPassengers;
     }
 
-    public boolean isRoundTrip() {
-        return isRoundTrip;
-    }
-
-    public void setRoundTrip(boolean roundTrip) {
-        isRoundTrip = roundTrip;
-    }
-
-    public String getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(String returnDate) {
-        this.returnDate = returnDate;
-    }
 }

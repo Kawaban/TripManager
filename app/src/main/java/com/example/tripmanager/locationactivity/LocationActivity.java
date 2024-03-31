@@ -74,4 +74,10 @@ public class LocationActivity extends AppCompatActivity {
         });
     }
 
+    public void onRestart() {
+        super.onRestart();
+        mainLayout.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.GONE);
+    }
+
 }
