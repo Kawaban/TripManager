@@ -3,9 +3,11 @@ package com.example.tripmanager.locationactivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +24,10 @@ public class LocationActivity extends AppCompatActivity {
     private EditText cityText;
     private CheckBox attractionsCheckBox;
     private CheckBox restaurantsCheckBox;
+    private ProgressBar progressBar;
+    private View loadingLayout;
+    private View mainLayout;
+
     private LocationAPIController locationAPIController;
     @SuppressLint("MissingInflatedId")
     public void onCreate(Bundle savedInstanceState) {
@@ -31,8 +37,14 @@ public class LocationActivity extends AppCompatActivity {
         cityText = findViewById(R.id.editTextCity);
         attractionsCheckBox = findViewById(R.id.checkBoxAttractions);
         restaurantsCheckBox = findViewById(R.id.checkBoxRestaraunts);
+        progressBar = findViewById(R.id.progressBar);
+        loadingLayout = findViewById(R.id.loading_layout);
+        mainLayout = findViewById(R.id.main_location_layout);
+        mainLayout.setVisibility(View.VISIBLE);
 
-        locationAPIController = new LocationAPIController();
+        loadingLayout.setVisibility(View.GONE);
+
+        locationAPIController = new LocationAPIController(this, mainLayout, loadingLayout);
 
         planButton.setOnClickListener(v -> {
             String city = cityText.getText().toString();
@@ -49,17 +61,14 @@ public class LocationActivity extends AppCompatActivity {
                 restaurantsCheckBox.setError("At least one of the checkboxes must be checked");
                 return;
             }
+            mainLayout.setVisibility(View.GONE);
+            loadingLayout.setVisibility(View.VISIBLE);
 
 
-                RequestDTO requestDTO = new RequestDTO(city, attractions, restaurants);
-                try {
-                    ArrayList<ResponseDTO> responseDTOS= locationAPIController.execute(requestDTO).get();
-                    Intent intent = new Intent(this, LocationResultActivity.class);
-                    intent.putParcelableArrayListExtra("responses", responseDTOS);
-                    startActivity(intent);
-                } catch (ExecutionException | InterruptedException  e) {
-                    throw new RuntimeException(e);
-                }
+            RequestDTO requestDTO = new RequestDTO(city, attractions, restaurants);
+            locationAPIController.execute(requestDTO);
+
+
 
 
         });

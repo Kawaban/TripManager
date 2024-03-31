@@ -1,13 +1,17 @@
 package com.example.tripmanager.aiadvisoractivity.domain;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.TextView;
 
 
 import com.example.tripmanager.R;
 import com.example.tripmanager.infrastructure.database.AppDatabase;
 import com.example.tripmanager.infrastructure.database.TripEntity;
+import com.example.tripmanager.infrastructure.util.BackgroundTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,11 +28,15 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class AIAdvisorAPIController extends AsyncTask<String, Void, String> {
+public class AIAdvisorAPIController extends BackgroundTask<String, String> {
     private final OkHttpClient client;
     private final AppDatabase db;
+    private TextView textViewOutput;
+    private View mainLayout;
+    private View loadingLayout;
     private final Context applicationContext;
-    public AIAdvisorAPIController(Context applicationContext) {
+    public AIAdvisorAPIController(Context applicationContext, Activity activity, View mainLayout, View loadingLayout, TextView textView) {
+        super(activity);
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(5, TimeUnit.MINUTES) // connect timeout
                 .writeTimeout(5, TimeUnit.MINUTES) // write timeout
@@ -36,6 +44,9 @@ public class AIAdvisorAPIController extends AsyncTask<String, Void, String> {
         client = builder.build();
         db = AppDatabase.getInstance(applicationContext);
         this.applicationContext = applicationContext;
+        this.textViewOutput=textView;
+        this.mainLayout= mainLayout;
+        this.loadingLayout = loadingLayout;
     }
 
     public String getRecommendations(String input) throws IOException, JSONException {
@@ -75,11 +86,24 @@ public class AIAdvisorAPIController extends AsyncTask<String, Void, String> {
 
 
     @Override
-    protected String doInBackground(String... strings) {
+    public String doInBackground(String strings) {
         try {
             return getRecommendations(prepareInput());
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void onPreExecute() {
+        mainLayout.setVisibility(View.GONE);
+        loadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onPostExecute(Activity activity, String response) {
+        mainLayout.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.GONE);
+        textViewOutput.setText(response);
     }
 }

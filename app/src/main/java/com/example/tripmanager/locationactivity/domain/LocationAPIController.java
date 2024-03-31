@@ -1,7 +1,14 @@
 package com.example.tripmanager.locationactivity.domain;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.View;
 
+
+import com.example.tripmanager.flixbusactivity.FlixBusResultsActivity;
+import com.example.tripmanager.infrastructure.util.BackgroundTask;
+import com.example.tripmanager.locationactivity.LocationResultActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,10 +22,15 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class LocationAPIController extends AsyncTask<RequestDTO, Void, ArrayList<ResponseDTO>> {
+public class LocationAPIController extends BackgroundTask<RequestDTO,ArrayList<ResponseDTO>> {
     private final OkHttpClient client;
-    public LocationAPIController() {
+    private View mainLayout;
+    private View loadingLayout;
+    public LocationAPIController(Activity activity, View mainLayout, View loadingLayout) {
+        super(activity);
         client = new OkHttpClient();
+        this.mainLayout = mainLayout;
+        this.loadingLayout = loadingLayout;
     }
 
     public String getAttractionId(String city) throws IOException, JSONException {
@@ -108,11 +120,24 @@ public class LocationAPIController extends AsyncTask<RequestDTO, Void, ArrayList
         return responses;
     }
     @Override
-    protected ArrayList<ResponseDTO> doInBackground(RequestDTO... request) {
+    public ArrayList<ResponseDTO> doInBackground(RequestDTO request) {
         try {
-            return getResponses(request[0]);
+            return getResponses(request);
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void onPreExecute() {
+        mainLayout.setVisibility(View.GONE);
+        loadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onPostExecute(Activity activity, ArrayList<ResponseDTO> response) {
+        Intent intent = new Intent(activity, LocationResultActivity.class);
+        intent.putParcelableArrayListExtra("responses", response);
+        activity.startActivity(intent);
     }
 }

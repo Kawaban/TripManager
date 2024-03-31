@@ -1,12 +1,18 @@
 package com.example.tripmanager.flixbusactivity.domain;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.View;
 
 import androidx.room.Room;
 
+import com.example.tripmanager.flixbusactivity.FlixBusResultsActivity;
 import com.example.tripmanager.infrastructure.database.AppDatabase;
 import com.example.tripmanager.infrastructure.database.CityEntity;
+import com.example.tripmanager.infrastructure.util.BackgroundTask;
+import com.example.tripmanager.locationactivity.LocationResultActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,12 +26,17 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class FlixBusAPIController extends AsyncTask<RequestDTO, Void, ArrayList<ResponseDTO>> {
+public class FlixBusAPIController extends BackgroundTask<RequestDTO, ArrayList<ResponseDTO>> {
     private final AppDatabase db;
     private final OkHttpClient client;
-    public FlixBusAPIController(Context applicationContext) {
-       client = new OkHttpClient();
+    private View mainLayout;
+    private View loadingLayout;
+    public FlixBusAPIController(Context applicationContext, Activity activity, View mainLayout, View loadingLayout) {
+        super(activity);
+        client = new OkHttpClient();
         db = AppDatabase.getInstance(applicationContext);
+        this.mainLayout = mainLayout;
+        this.loadingLayout = loadingLayout;
     }
 
     public CityEntity requestFlixBusIdOfCity(String cityName) throws IOException, JSONException {
@@ -88,11 +99,24 @@ public class FlixBusAPIController extends AsyncTask<RequestDTO, Void, ArrayList<
 
 
     @Override
-    protected ArrayList<ResponseDTO> doInBackground(RequestDTO... request) {
+    public ArrayList<ResponseDTO> doInBackground(RequestDTO request) {
         try {
-            return getResponses(request[0]);
+            return getResponses(request);
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void onPreExecute() {
+        mainLayout.setVisibility(View.GONE);
+        loadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onPostExecute(Activity activity, ArrayList<ResponseDTO> response) {
+        Intent intent = new Intent(activity, FlixBusResultsActivity.class);
+        intent.putParcelableArrayListExtra("responses", response);
+        activity.startActivity(intent);
     }
 }
