@@ -27,9 +27,9 @@ You can save information about your trips, such as photos, rating, and expenses.
 ## APIs
 
 Currently, the application uses the following APIs:
-FlixBus API
-GoogleMaps API
-OPEN AI API
-Tourist Attraction API
-TripAdvisor API
+- FlixBus API
+- GoogleMaps API
+- OPEN AI API
+- Tourist Attraction API
+- TripAdvisor API
 
