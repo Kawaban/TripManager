@@ -2,4 +2,10 @@
     <string name="app_name">TripManager</string>
     <string name="question">recommend the best trip destination</string>
     <string name="context">You are a personal trip advisor. Consider the best option for person according to his previous trips: </string>
+    <string-array name="currency_array">
+        <item>USD</item>
+        <item>EUR</item>
+        <item>PLN</item>
+        <item>GBP</item>
+    </string-array>
 </resources>
