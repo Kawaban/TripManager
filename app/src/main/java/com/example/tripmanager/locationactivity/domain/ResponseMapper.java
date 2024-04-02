@@ -17,7 +17,7 @@ public class ResponseMapper {
     }
 
     public static ResponseDTO mapJSONRestaurantsToResponseDTO(JSONObject jsonObject) {
-        if(jsonObject.optString("latitude").equals("") || jsonObject.optString("longitude").equals(""))
+        if (jsonObject.optString("latitude").equals("") || jsonObject.optString("longitude").equals(""))
             return null;
         return new ResponseDTO(
                 jsonObject.optString("latitude"),

@@ -24,8 +24,9 @@ import okhttp3.Response;
 public class FlixBusAPIController extends BackgroundTask<RequestDTO, ArrayList<ResponseDTO>> {
     private final AppDatabase db;
     private final OkHttpClient client;
-    private View mainLayout;
-    private View loadingLayout;
+    private final View mainLayout;
+    private final View loadingLayout;
+
     public FlixBusAPIController(Context applicationContext, Activity activity, View mainLayout, View loadingLayout) {
         super(activity);
         client = new OkHttpClient();
@@ -46,7 +47,7 @@ public class FlixBusAPIController extends BackgroundTask<RequestDTO, ArrayList<R
 
         String stringJson = response.body().string();
         JSONArray jsonObject = new JSONArray(stringJson);
-        String flixBusId= jsonObject.getJSONObject(0).getJSONObject("city").getString("id");
+        String flixBusId = jsonObject.getJSONObject(0).getJSONObject("city").getString("id");
         insertCity(cityName, flixBusId);
         return db.cityDao().findByName(cityName);
     }
@@ -61,19 +62,18 @@ public class FlixBusAPIController extends BackgroundTask<RequestDTO, ArrayList<R
 
     public ArrayList<ResponseDTO> getResponses(RequestDTO requestDTO) throws IOException, JSONException {
 
-        CityEntity origin =db.cityDao().findByName(requestDTO.getOrigin());
-        if(origin == null){
+        CityEntity origin = db.cityDao().findByName(requestDTO.getOrigin());
+        if (origin == null) {
             origin = requestFlixBusIdOfCity(requestDTO.getOrigin());
         }
-        CityEntity destination =db.cityDao().findByName(requestDTO.getDestination());
-        if(destination == null){
+        CityEntity destination = db.cityDao().findByName(requestDTO.getDestination());
+        if (destination == null) {
             destination = requestFlixBusIdOfCity(requestDTO.getDestination());
         }
 
 
-
         Request request = new Request.Builder()
-                .url("https://flixbus2.p.rapidapi.com/trips?from_id="+origin.flixbus_id+"&to_id="+destination.flixbus_id+"&date="+requestDTO.getDate()+"&adult="+requestDTO.getNumberOfPassengers()+"&children=0&bikes=0&currency=EUR")
+                .url("https://flixbus2.p.rapidapi.com/trips?from_id=" + origin.flixbus_id + "&to_id=" + destination.flixbus_id + "&date=" + requestDTO.getDate() + "&adult=" + requestDTO.getNumberOfPassengers() + "&children=0&bikes=0&currency=EUR")
                 .get()
                 .addHeader("X-RapidAPI-Key", "1120050b5emshec695034c8d3f0cp15fd46jsn60f4b164ea9c")
                 .addHeader("X-RapidAPI-Host", "flixbus2.p.rapidapi.com")
@@ -83,18 +83,16 @@ public class FlixBusAPIController extends BackgroundTask<RequestDTO, ArrayList<R
 
         JSONObject responseJson = new JSONObject(response.body().string());
         ArrayList<ResponseDTO> responseDTOS = new ArrayList<ResponseDTO>();
-        for(int i = 0; i < responseJson.getJSONArray("journeys").length(); i++){
+        for (int i = 0; i < responseJson.getJSONArray("journeys").length(); i++) {
             responseDTOS.add(ResponseMapper.mapToResponseDTO(responseJson.getJSONArray("journeys").getJSONObject(i)));
         }
         return responseDTOS;
     }
 
 
-
-
     @Override
-    public ArrayList<ResponseDTO> doInBackground(RequestDTO request) throws IOException, JSONException{
-            return getResponses(request);
+    public ArrayList<ResponseDTO> doInBackground(RequestDTO request) throws IOException, JSONException {
+        return getResponses(request);
     }
 
     @Override

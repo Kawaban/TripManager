@@ -20,10 +20,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class LocationAPIController extends BackgroundTask<RequestDTO,ArrayList<ResponseDTO>> {
+public class LocationAPIController extends BackgroundTask<RequestDTO, ArrayList<ResponseDTO>> {
     private final OkHttpClient client;
-    private View mainLayout;
-    private View loadingLayout;
+    private final View mainLayout;
+    private final View loadingLayout;
+
     public LocationAPIController(Activity activity, View mainLayout, View loadingLayout) {
         super(activity);
         client = new OkHttpClient();
@@ -33,7 +34,7 @@ public class LocationAPIController extends BackgroundTask<RequestDTO,ArrayList<R
 
     public String getAttractionId(String city) throws IOException, JSONException {
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-        RequestBody body = RequestBody.create(mediaType, "q="+city+"&language=en_US");
+        RequestBody body = RequestBody.create(mediaType, "q=" + city + "&language=en_US");
         Request request = new Request.Builder()
                 .url("https://tourist-attraction.p.rapidapi.com/typeahead")
                 .post(body)
@@ -52,7 +53,7 @@ public class LocationAPIController extends BackgroundTask<RequestDTO,ArrayList<R
         String locationId = getAttractionId(requestDTO.getCity());
         System.out.println(locationId);
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-        RequestBody body = RequestBody.create(mediaType, "location_id="+locationId+"&language=en_US&currency=USD&offset=0");
+        RequestBody body = RequestBody.create(mediaType, "location_id=" + locationId + "&language=en_US&currency=USD&offset=0");
         Request request = new Request.Builder()
                 .url("https://tourist-attraction.p.rapidapi.com/search")
                 .post(body)
@@ -74,7 +75,7 @@ public class LocationAPIController extends BackgroundTask<RequestDTO,ArrayList<R
 
     public String getRestaurantID(String city) throws IOException, JSONException {
         Request request = new Request.Builder()
-                .url("https://travel-advisor.p.rapidapi.com/locations/search?query="+city+"&limit=30&offset=0&units=km&location_id=1&currency=USD&sort=relevance&lang=en_US")
+                .url("https://travel-advisor.p.rapidapi.com/locations/search?query=" + city + "&limit=30&offset=0&units=km&location_id=1&currency=USD&sort=relevance&lang=en_US")
                 .get()
                 .addHeader("X-RapidAPI-Key", "1120050b5emshec695034c8d3f0cp15fd46jsn60f4b164ea9c")
                 .addHeader("X-RapidAPI-Host", "travel-advisor.p.rapidapi.com")
@@ -88,7 +89,7 @@ public class LocationAPIController extends BackgroundTask<RequestDTO,ArrayList<R
     public ArrayList<ResponseDTO> getRestaurants(RequestDTO requestDTO) throws JSONException, IOException {
         String locationId = getRestaurantID(requestDTO.getCity());
         Request request = new Request.Builder()
-                .url("https://travel-advisor.p.rapidapi.com/restaurants/list?location_id="+locationId+"&restaurant_tagcategory=10591&restaurant_tagcategory_standalone=10591&currency=USD&lunit=km&limit=30&open_now=false&lang=en_US")
+                .url("https://travel-advisor.p.rapidapi.com/restaurants/list?location_id=" + locationId + "&restaurant_tagcategory=10591&restaurant_tagcategory_standalone=10591&currency=USD&lunit=km&limit=30&open_now=false&lang=en_US")
                 .get()
                 .addHeader("X-RapidAPI-Key", "1120050b5emshec695034c8d3f0cp15fd46jsn60f4b164ea9c")
                 .addHeader("X-RapidAPI-Host", "travel-advisor.p.rapidapi.com")
@@ -101,7 +102,7 @@ public class LocationAPIController extends BackgroundTask<RequestDTO,ArrayList<R
         for (int i = 0; i < jsonObject.getJSONArray("data").length(); i++) {
             ResponseDTO responseDTO = ResponseMapper.mapJSONRestaurantsToResponseDTO(jsonObject.getJSONArray("data").getJSONObject(i));
             if (responseDTO != null)
-                 responses.add(responseDTO);
+                responses.add(responseDTO);
         }
         return responses;
 
@@ -117,9 +118,10 @@ public class LocationAPIController extends BackgroundTask<RequestDTO,ArrayList<R
         }
         return responses;
     }
+
     @Override
-    public ArrayList<ResponseDTO> doInBackground(RequestDTO request) throws IOException, JSONException{
-            return getResponses(request);
+    public ArrayList<ResponseDTO> doInBackground(RequestDTO request) throws IOException, JSONException {
+        return getResponses(request);
     }
 
     @Override

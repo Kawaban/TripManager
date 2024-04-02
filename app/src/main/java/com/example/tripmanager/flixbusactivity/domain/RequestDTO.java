@@ -6,6 +6,7 @@ public class RequestDTO {
     private String date;
 
     private int numberOfPassengers;
+
     public RequestDTO(String origin, String destination, String date, int numberOfPassengers) {
         this.origin = origin;
         this.destination = destination;

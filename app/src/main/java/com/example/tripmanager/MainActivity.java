@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Button aiAdvisorButton;
     private Button statisticsButton;
     private Button locationButton;
+
     @SuppressLint("MissingInflatedId")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

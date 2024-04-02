@@ -8,11 +8,12 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 
-public abstract class BackgroundTask<T,A> {
+public abstract class BackgroundTask<T, A> {
 
     private final WeakReference<Activity> activity;
+
     public BackgroundTask(Activity activity) {
-        this.activity =  new WeakReference<Activity>(activity);
+        this.activity = new WeakReference<Activity>(activity);
     }
 
     private void startBackground(T request) {
@@ -28,7 +29,7 @@ public abstract class BackgroundTask<T,A> {
                     });
 
                     try {
-                       A response = doInBackground(request);
+                        A response = doInBackground(request);
                         activityRef.runOnUiThread(new Runnable() {
                             public void run() {
                                 onPostExecute(activityRef, response);
@@ -49,13 +50,17 @@ public abstract class BackgroundTask<T,A> {
             }
         }).start();
     }
-    public void execute(T request){
+
+    public void execute(T request) {
         startBackground(request);
     }
 
     public abstract A doInBackground(T request) throws IOException, JSONException;
+
     public abstract void onPreExecute();
+
     public abstract void onPostExecute(Activity activity, A response);
+
     public abstract void onException();
 
 }

@@ -15,13 +15,12 @@ import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    private ArrayList<Uri> images;
+    private final ArrayList<Uri> images;
 
     public RecyclerAdapter(ArrayList<Uri> images) {
         if (images == null) {
             this.images = new ArrayList<>();
-        }
-        else {
+        } else {
             this.images = images;
         }
     }
@@ -46,6 +45,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image);

@@ -15,8 +15,9 @@ import java.util.ArrayList;
 
 import de.codecrafters.tableview.TableView;
 
-public class FlixBusResultsActivity extends AppCompatActivity{
+public class FlixBusResultsActivity extends AppCompatActivity {
     private TableView<ResponseDTO> tableView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

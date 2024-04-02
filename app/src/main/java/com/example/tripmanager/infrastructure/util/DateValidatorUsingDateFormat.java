@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class DateValidatorUsingDateFormat implements DateValidator {
-    private String dateFormat;
+    private final String dateFormat;
 
     public DateValidatorUsingDateFormat(String dateFormat) {
         this.dateFormat = dateFormat;

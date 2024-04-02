@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class Converters {
     public static final String delimiter = ",";
+
     @TypeConverter
     public static String fromListToString(ArrayList<Uri> uriList) {
         StringBuilder stringBuilder = new StringBuilder();

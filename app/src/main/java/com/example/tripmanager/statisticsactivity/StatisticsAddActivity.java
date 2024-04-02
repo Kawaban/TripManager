@@ -41,9 +41,8 @@ public class StatisticsAddActivity extends AppCompatActivity {
 
     private Spinner spinner;
 
-    private  ImageButton startDateButton;
-    private  ImageButton endDateButton;
-
+    private ImageButton startDateButton;
+    private ImageButton endDateButton;
 
 
     public static class DatePickerFragment extends DialogFragment
@@ -79,23 +78,16 @@ public class StatisticsAddActivity extends AppCompatActivity {
             }
 
 
-
         }
     }
 
 
-
-
-
-
-
-
     ArrayList<Uri> images = new ArrayList<>();
+
     @SuppressLint("MissingInflatedId")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics_add);
-
 
 
         addImagesButton = findViewById(R.id.buttonAddImages);
@@ -142,13 +134,13 @@ public class StatisticsAddActivity extends AppCompatActivity {
 
             // check if the data is empty
             if (location.isEmpty() || expenses.isEmpty() || startDate.isEmpty() ||
-                    endDate.isEmpty() || images.isEmpty()){
+                    endDate.isEmpty() || images.isEmpty()) {
                 Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             // check if the date format is valid
-            if (!validator.isValid(startDate) || !validator.isValid(endDate)){
+            if (!validator.isValid(startDate) || !validator.isValid(endDate)) {
                 Toast.makeText(this, "Invalid date format", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -158,21 +150,19 @@ public class StatisticsAddActivity extends AppCompatActivity {
             Calendar cal2 = Calendar.getInstance();
             cal1.setTime(new Date(startDate));
             cal2.setTime(new Date(endDate));
-            if (cal1.after(cal2)){
+            if (cal1.after(cal2)) {
                 Toast.makeText(this, "Start date cannot be after end date", Toast.LENGTH_SHORT).show();
                 return;
             }
 
 
-
             //check if the total expenses is a valid number
             try {
                 Double.parseDouble(expenses);
-            } catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 Toast.makeText(this, "Invalid expenses", Toast.LENGTH_SHORT).show();
                 return;
             }
-
 
 
             // create a new trip entity
@@ -209,13 +199,13 @@ public class StatisticsAddActivity extends AppCompatActivity {
             if (data.getClipData() != null) {
                 int cout = data.getClipData().getItemCount();
                 for (int i = 0; i < cout; i++) {
-                        Uri imageurl = data.getClipData().getItemAt(i).getUri();
-                        getContentResolver().takePersistableUriPermission(imageurl,
+                    Uri imageurl = data.getClipData().getItemAt(i).getUri();
+                    getContentResolver().takePersistableUriPermission(imageurl,
                             Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        images.add(imageurl);
+                    images.add(imageurl);
                 }
             } else {
-                    Uri imageurl = data.getData();
+                Uri imageurl = data.getData();
                 if (imageurl != null) {
                     getContentResolver().takePersistableUriPermission(imageurl,
                             Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -226,8 +216,6 @@ public class StatisticsAddActivity extends AppCompatActivity {
             Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
         }
     }
-
-
 
 
 }

@@ -15,7 +15,7 @@ import java.util.List;
 import de.codecrafters.tableview.TableDataAdapter;
 
 public class ResponceTableDataAdapter extends TableDataAdapter<ResponseDTO> {
-    private ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+    private final ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
     public ResponceTableDataAdapter(Context context, List<ResponseDTO> data) {
         super(context, data);
     }

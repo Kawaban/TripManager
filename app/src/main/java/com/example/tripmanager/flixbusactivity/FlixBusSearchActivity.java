@@ -39,7 +39,6 @@ public class FlixBusSearchActivity extends AppCompatActivity {
     private ImageButton dateButton;
 
 
-
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
@@ -72,15 +71,6 @@ public class FlixBusSearchActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
-
-
     @Override
     @SuppressLint("MissingInflatedId")
     public void onCreate(Bundle savedInstanceState) {
@@ -99,7 +89,7 @@ public class FlixBusSearchActivity extends AppCompatActivity {
         mainLayout = findViewById(R.id.main_flixbus_layout);
         loadingLayout = findViewById(R.id.loading_layout);
 
-        flixBusAPIController=new FlixBusAPIController(getApplicationContext(), this, mainLayout, loadingLayout);
+        flixBusAPIController = new FlixBusAPIController(getApplicationContext(), this, mainLayout, loadingLayout);
 
         searchButton.setOnClickListener(v -> {
 
@@ -109,19 +99,19 @@ public class FlixBusSearchActivity extends AppCompatActivity {
             }
 
             //check date format
-            if(!validator.isValid(departureDateText.getText().toString())){
+            if (!validator.isValid(departureDateText.getText().toString())) {
                 Toast.makeText(getApplicationContext(), "Invalid date format", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             //check if the number of passengers is valid
-            if(Integer.parseInt(numberText.getText().toString()) <= 0){
+            if (Integer.parseInt(numberText.getText().toString()) <= 0) {
                 Toast.makeText(getApplicationContext(), "Invalid number of passengers", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             //check if the departure and destination cities are the same
-            if(fromText.getText().toString().equals(toText.getText().toString())){
+            if (fromText.getText().toString().equals(toText.getText().toString())) {
                 Toast.makeText(getApplicationContext(), "Departure and destination cities cannot be the same", Toast.LENGTH_SHORT).show();
                 return;
             }

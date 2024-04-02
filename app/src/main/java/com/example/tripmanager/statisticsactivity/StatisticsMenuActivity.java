@@ -17,12 +17,13 @@ import de.codecrafters.tableview.TableView;
 
 public class StatisticsMenuActivity extends AppCompatActivity {
 
-      private Button statisticsButton;
-      private Button deleteTripButton;
-      private TableView tableView;
-      private int type;
-      @SuppressLint("MissingInflatedId")
-      public void onCreate(Bundle savedInstanceState) {
+    private Button statisticsButton;
+    private Button deleteTripButton;
+    private TableView tableView;
+    private int type;
+
+    @SuppressLint("MissingInflatedId")
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics_menu);
         type = R.integer.TYPE_SHOW;
@@ -38,24 +39,21 @@ public class StatisticsMenuActivity extends AppCompatActivity {
             if (type == R.integer.TYPE_SHOW) {
                 type = R.integer.TYPE_DELETE;
                 tableView.setDataAdapter(new TripTableDataAdapter(this, AppDatabase.getInstance(this).tripDao().getAll(), type, tableView));
-            }
-            else {
+            } else {
                 type = R.integer.TYPE_SHOW;
                 tableView.setDataAdapter(new TripTableDataAdapter(this, AppDatabase.getInstance(this).tripDao().getAll(), type, tableView));
             }
         });
         tableView.setColumnCount(5);
         tableView.setHeaderAdapter(new TripTableHeaderAdapter(this));
-        tableView.setDataAdapter(new TripTableDataAdapter(this, AppDatabase.getInstance(this).tripDao().getAll(),type,tableView));
+        tableView.setDataAdapter(new TripTableDataAdapter(this, AppDatabase.getInstance(this).tripDao().getAll(), type, tableView));
 
-      }
+    }
 
-      public void onRestart() {
+    public void onRestart() {
         super.onRestart();
-        tableView.setDataAdapter(new TripTableDataAdapter(this, AppDatabase.getInstance(this).tripDao().getAll(),type,tableView));
-      }
-
-
+        tableView.setDataAdapter(new TripTableDataAdapter(this, AppDatabase.getInstance(this).tripDao().getAll(), type, tableView));
+    }
 
 
 }

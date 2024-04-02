@@ -4,6 +4,7 @@ public class RequestDTO {
     private String city;
     private Boolean attractions;
     private Boolean restaurants;
+
     public RequestDTO(String city, Boolean attractions, Boolean restaurants) {
         this.city = city;
         this.attractions = attractions;

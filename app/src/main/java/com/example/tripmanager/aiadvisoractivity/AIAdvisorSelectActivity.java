@@ -20,6 +20,7 @@ public class AIAdvisorSelectActivity extends AppCompatActivity {
     private Button buttonAdvisor;
     private TextView textViewOutput;
     private EditText editTextCurrentLocation;
+
     @SuppressLint("MissingInflatedId")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,12 +31,12 @@ public class AIAdvisorSelectActivity extends AppCompatActivity {
         textViewOutput = findViewById(R.id.textViewOutput);
         editTextCurrentLocation = findViewById(R.id.editTextCurrentLocation);
 
-        aiAdvisorAPIController = new AIAdvisorAPIController(getApplicationContext(), this, mainLayout,loadingLayout, textViewOutput);
+        aiAdvisorAPIController = new AIAdvisorAPIController(getApplicationContext(), this, mainLayout, loadingLayout, textViewOutput);
         buttonAdvisor = findViewById(R.id.buttonAdvisor);
 
 
         buttonAdvisor.setOnClickListener(v -> {
-            if(editTextCurrentLocation.getText().toString().isEmpty()){
+            if (editTextCurrentLocation.getText().toString().isEmpty()) {
                 textViewOutput.setText("Please enter a location");
                 return;
             }

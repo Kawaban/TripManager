@@ -12,6 +12,7 @@ public class ResponseDTO implements Parcelable {
     private String info;
     private String rating;
     private int type;
+
     public ResponseDTO(String latitude, String longitude, String name, String info, String rating, int type) {
         this.latitude = latitude;
         this.longitude = longitude;
@@ -58,6 +59,7 @@ public class ResponseDTO implements Parcelable {
     public String getRating() {
         return rating;
     }
+
     public void setRating(String rating) {
         this.rating = rating;
     }

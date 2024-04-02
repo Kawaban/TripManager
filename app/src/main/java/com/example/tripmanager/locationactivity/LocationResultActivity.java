@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 public class LocationResultActivity extends AppCompatActivity implements OnMapReadyCallback {
     private ArrayList<ResponseDTO> result;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,7 @@ public class LocationResultActivity extends AppCompatActivity implements OnMapRe
         CustomInfoWindowAdapter customInfoWindowAdapter = new CustomInfoWindowAdapter(this);
         googleMap.setInfoWindowAdapter(customInfoWindowAdapter);
 
-        for(ResponseDTO responseDTO : result){
+        for (ResponseDTO responseDTO : result) {
             if (responseDTO.getType() == R.integer.TYPE_RESTAURANT) {
                 AdvancedMarkerOptions advancedMarkerOptions = new AdvancedMarkerOptions()
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
@@ -53,9 +54,7 @@ public class LocationResultActivity extends AppCompatActivity implements OnMapRe
                         .snippet("Description: " + responseDTO.getInfo() + "\nRating: " + responseDTO.getRating())
                         .title(responseDTO.getName());
                 googleMap.addMarker(advancedMarkerOptions);
-            }
-
-            else if (responseDTO.getType() == R.integer.TYPE_ATTRACTION){
+            } else if (responseDTO.getType() == R.integer.TYPE_ATTRACTION) {
                 AdvancedMarkerOptions advancedMarkerOptions = new AdvancedMarkerOptions()
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                         .position(new LatLng(Double.parseDouble(responseDTO.getLatitude()), Double.parseDouble(responseDTO.getLongitude())))
@@ -72,7 +71,7 @@ public class LocationResultActivity extends AppCompatActivity implements OnMapRe
     private class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         private final View mWindow;
-        private Context mContext;
+        private final Context mContext;
 
         public CustomInfoWindowAdapter(Context context) {
             mContext = context;

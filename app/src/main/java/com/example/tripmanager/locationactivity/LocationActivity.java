@@ -29,6 +29,7 @@ public class LocationActivity extends AppCompatActivity {
     private View mainLayout;
 
     private LocationAPIController locationAPIController;
+
     @SuppressLint("MissingInflatedId")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +57,7 @@ public class LocationActivity extends AppCompatActivity {
                 return;
             }
 
-             if(!attractions && !restaurants){
+            if (!attractions && !restaurants) {
                 attractionsCheckBox.setError("At least one of the checkboxes must be checked");
                 restaurantsCheckBox.setError("At least one of the checkboxes must be checked");
                 return;
@@ -67,8 +68,6 @@ public class LocationActivity extends AppCompatActivity {
 
             RequestDTO requestDTO = new RequestDTO(city, attractions, restaurants);
             locationAPIController.execute(requestDTO);
-
-
 
 
         });

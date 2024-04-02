@@ -28,9 +28,9 @@ import okhttp3.Response;
 public class AIAdvisorAPIController extends BackgroundTask<RequestDTO, String> {
     private final OkHttpClient client;
     private final AppDatabase db;
-    private TextView textViewOutput;
-    private View mainLayout;
-    private View loadingLayout;
+    private final TextView textViewOutput;
+    private final View mainLayout;
+    private final View loadingLayout;
     private final Context applicationContext;
     public AIAdvisorAPIController(Context applicationContext, Activity activity, View mainLayout, View loadingLayout, TextView textView) {
         super(activity);
@@ -73,7 +73,7 @@ public class AIAdvisorAPIController extends BackgroundTask<RequestDTO, String> {
         tripsNames.append(requestDTO.getCurrentLocation());
         try {
             jsonObject.put("question", applicationContext.getResources().getString(R.string.question));
-            jsonObject.put("context", applicationContext.getResources().getString(R.string.context) + tripsNames.toString());
+            jsonObject.put("context", applicationContext.getResources().getString(R.string.context) + tripsNames);
 
         } catch (JSONException e) {
             e.printStackTrace();

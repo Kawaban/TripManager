@@ -28,13 +28,15 @@ import de.codecrafters.tableview.TableDataAdapter;
 import de.codecrafters.tableview.TableView;
 
 public class TripTableDataAdapter extends TableDataAdapter<TripEntity> {
-    private int type;
-    private TableView tableView;
+    private final int type;
+    private final TableView tableView;
+
     public TripTableDataAdapter(Context context, List<TripEntity> data, int type, TableView tableView) {
         super(context, data);
         this.type = type;
         this.tableView = tableView;
     }
+
     @Override
     public View getCellView(int rowIndex, int columnIndex, ViewGroup parentView) {
         TripEntity response = getRowData(rowIndex);
@@ -90,20 +92,18 @@ public class TripTableDataAdapter extends TableDataAdapter<TripEntity> {
     }
 
     private View renderImages(TripEntity trip) {
-        if (type == R.integer.TYPE_SHOW)
-        {
+        if (type == R.integer.TYPE_SHOW) {
             final Button button = new Button(getContext());
             button.setText("Show Images");
             button.setPadding(20, 10, 20, 10);
             button.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), StatisticImagesActivity.class);
-                intent.putExtra("images",Converters.fromListToString(trip.images));
+                intent.putExtra("images", Converters.fromListToString(trip.images));
                 getContext().startActivity(intent);
             });
             return button;
         }
-        if (type == R.integer.TYPE_DELETE)
-        {
+        if (type == R.integer.TYPE_DELETE) {
             final Button button = new Button(getContext());
             button.setText("Delete trip");
             button.setPadding(20, 10, 20, 10);
