@@ -25,7 +25,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class AIAdvisorAPIController extends BackgroundTask<String, String> {
+public class AIAdvisorAPIController extends BackgroundTask<RequestDTO, String> {
     private final OkHttpClient client;
     private final AppDatabase db;
     private TextView textViewOutput;
@@ -63,13 +63,14 @@ public class AIAdvisorAPIController extends BackgroundTask<String, String> {
         return jsonObject.optString("result");
     }
 
-    public String prepareInput() {
+    public String prepareInput(RequestDTO requestDTO) {
         JSONObject jsonObject = new JSONObject();
         List<TripEntity> trips =  db.tripDao().getAll();
         StringBuilder tripsNames = new StringBuilder();
         for (TripEntity trip : trips) {
             tripsNames.append(trip.location).append(", ");
         }
+        tripsNames.append(requestDTO.getCurrentLocation());
         try {
             jsonObject.put("question", applicationContext.getResources().getString(R.string.question));
             jsonObject.put("context", applicationContext.getResources().getString(R.string.context) + tripsNames.toString());
@@ -83,8 +84,8 @@ public class AIAdvisorAPIController extends BackgroundTask<String, String> {
 
 
     @Override
-    public String doInBackground(String strings) throws IOException, JSONException {
-            return getRecommendations(prepareInput());
+    public String doInBackground(RequestDTO requestDTO) throws IOException, JSONException {
+            return getRecommendations(prepareInput(requestDTO));
     }
 
     @Override
