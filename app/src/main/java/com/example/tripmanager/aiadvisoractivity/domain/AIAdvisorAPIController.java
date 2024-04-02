@@ -75,7 +75,6 @@ public class AIAdvisorAPIController extends BackgroundTask<RequestDTO, String> {
             jsonObject.put("question", applicationContext.getResources().getString(R.string.question));
             jsonObject.put("context", applicationContext.getResources().getString(R.string.context) + tripsNames.toString());
 
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
