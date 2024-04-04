@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is a simple trip manager that helps you to plan, manage and track your trips.
+This project is an Android application that helps you to plan, manage and track your trips.
 
 ## Features
 
